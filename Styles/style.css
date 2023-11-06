@@ -1,0 +1,32 @@
+body {
+    margin: 0;
+    background: #020202;
+    cursor: crosshair;
+    box-sizing: border-box;
+  }
+  canvas{
+    display:block;
+    width: 100%;
+    height: 100%;
+  }
+  h1 {
+    width: 90%;
+    position: absolute;
+    top: 40%;
+    padding: 20px;
+    text-align: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-family: "Arial";
+    font-size: 2.5em;
+    font-weight: 700;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .tagredElement{
+    position: absolute !important;
+    top: 40% !important;
+    left: 20% !important;
+
+  }
