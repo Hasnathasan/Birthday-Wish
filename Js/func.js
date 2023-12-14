@@ -15,7 +15,7 @@ function startContinuousClicks() {
 
   intervalId = setInterval(() => {
     targetElement.click(); // Simulate a click on the target element
-  }, 900); // 1000 millisecond interval
+  }, 700); // 1000 millisecond interval
 }
 
 function stopContinuousClicks() {
@@ -37,39 +37,39 @@ class Birthday {
     this.counter = 0
 
   }
-  
+
   resize() {
     this.width = canvas.width = window.innerWidth
     let center = this.width / 2 | 0
     this.spawnA = center - center / 4 | 0
     this.spawnB = center + center / 4 | 0
-    
+
     this.height = canvas.height = window.innerHeight
     this.spawnC = this.height * .1
     this.spawnD = this.height * .5
-    
+
   }
-  
+
   onClick(evt) {
-     let x = evt.clientX || evt.touches && evt.touches[0].pageX
-     let y = evt.clientY || evt.touches && evt.touches[0].pageY
-     
-     let count = random(3,5)
-     for(let i = 0; i < count; i++) this.fireworks.push(new Firework(
-        random(this.spawnA, this.spawnB),
-        this.height,
-        x,
-        y,
-        random(0, 260),
-        random(30, 110)))
-          
-     this.counter = -1
-     
+    let x = evt.clientX || evt.touches && evt.touches[0].pageX
+    let y = evt.clientY || evt.touches && evt.touches[0].pageY
+
+    let count = random(3, 5)
+    for (let i = 0; i < count; i++) this.fireworks.push(new Firework(
+      random(this.spawnA, this.spawnB),
+      this.height,
+      x,
+      y,
+      random(0, 260),
+      random(30, 110)))
+
+    this.counter = -1
+
   }
-  
+
   update(delta) {
     ctx.globalCompositeOperation = 'hard-light'
-    ctx.fillStyle = `rgba(20,20,20,${ 7 * delta })`
+    ctx.fillStyle = `rgba(20,20,20,${7 * delta})`
     ctx.fillRect(0, 0, this.width, this.height)
 
     ctx.globalCompositeOperation = 'lighter'
@@ -125,7 +125,7 @@ class Firework {
 
     } else {
       if (this.offsprings && !this.madeChilds) {
-        
+
         let babies = this.offsprings / 2
         for (let i = 0; i < babies; i++) {
           let targetX = this.x + this.offsprings * Math.cos(PI2 * i / babies) | 0
@@ -139,17 +139,17 @@ class Firework {
       this.madeChilds = true
       this.history.shift()
     }
-    
+
     if (this.history.length === 0) this.dead = true
-    else if (this.offsprings) { 
-        for (let i = 0; this.history.length > i; i++) {
-          let point = this.history[i]
-          ctx.beginPath()
-          ctx.fillStyle = 'hsl(' + this.shade + ',100%,' + i + '%)'
-          ctx.arc(point.x, point.y, 1, 0, PI2, false)
-          ctx.fill()
-        } 
-      } else {
+    else if (this.offsprings) {
+      for (let i = 0; this.history.length > i; i++) {
+        let point = this.history[i]
+        ctx.beginPath()
+        ctx.fillStyle = 'hsl(' + this.shade + ',100%,' + i + '%)'
+        ctx.arc(point.x, point.y, 1, 0, PI2, false)
+        ctx.fill()
+      }
+    } else {
       ctx.beginPath()
       ctx.fillStyle = 'hsl(' + this.shade + ',100%,50%)'
       ctx.arc(this.x, this.y, 1, 0, PI2, false)
@@ -169,14 +169,14 @@ window.onresize = () => birthday.resize()
 document.onclick = evt => birthday.onClick(evt)
 document.ontouchstart = evt => birthday.onClick(evt)
 
-  ;(function loop(){
-  	requestAnimationFrame(loop)
+  ; (function loop() {
+    requestAnimationFrame(loop)
 
-  	let now = timestamp()
-  	let delta = now - then
+    let now = timestamp()
+    let delta = now - then
 
     then = now
     birthday.update(delta / 1000)
-  	
+
 
   })()
